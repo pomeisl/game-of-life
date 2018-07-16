@@ -1,4 +1,4 @@
-package pe.accounting.conways;
+package pe.accounting.conways.game;
 
 /**
  * Representation of game.
@@ -14,7 +14,5 @@ public interface GameOfLife {
 	void update();
 
 	int[][] getBoard();
-	
-	int getGeneration();
 
 }

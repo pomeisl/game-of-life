@@ -1,5 +1,7 @@
 package pe.accounting.conways;
 
+import pe.accounting.conways.game.GameOfLife;
+
 /**
  * Observer interface to update representers.
  * 

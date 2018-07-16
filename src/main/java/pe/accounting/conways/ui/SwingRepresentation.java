@@ -9,10 +9,10 @@ import java.awt.Graphics;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import pe.accounting.conways.GameOfLife;
 import pe.accounting.conways.Observer;
+import pe.accounting.conways.game.GameOfLife;
 
-public class SwingRepresenter extends JPanel implements Observer, Representer {
+public class SwingRepresentation extends JPanel implements Observer, Representation {
 
 	/**
 	 * 
@@ -22,11 +22,11 @@ public class SwingRepresenter extends JPanel implements Observer, Representer {
 	private JFrame jFrame;
 	private GameOfLife model;
 
-	public SwingRepresenter(int width, int height) {
-		jFrame = new JFrame();
+	public SwingRepresentation(int width, int height) {
+		jFrame = new JFrame("Game of Life");
 		jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jFrame.getContentPane().add(this);
-		jFrame.setPreferredSize(new Dimension(width, height));
+		jFrame.setPreferredSize(new Dimension(width * 2, height * 2));
 		jFrame.pack();
 		jFrame.setLocationByPlatform(true);
 		jFrame.setVisible(true);
@@ -34,7 +34,6 @@ public class SwingRepresenter extends JPanel implements Observer, Representer {
 
 	@Override
 	public void update(GameOfLife model) {
-		this.jFrame.setTitle(model.getGeneration() + ". generation");
 		this.model = model;
 		this.paint();
 	}
@@ -63,7 +62,7 @@ public class SwingRepresenter extends JPanel implements Observer, Representer {
 
 			for (int j = 0; j < board[i].length; j++) {
 
-				Color c = board[i][j] == ALIVE ? Color.WHITE : Color.GRAY;
+				Color c = board[i][j] == ALIVE ? Color.GREEN : Color.BLACK;
 				g.setColor(c);
 
 				int x = (i * width) / SIDE_X;

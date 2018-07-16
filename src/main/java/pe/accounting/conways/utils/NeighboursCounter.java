@@ -4,7 +4,7 @@ import static pe.accounting.conways.common.Consts.ALIVE;
 
 public final class NeighboursCounter {
 
-	public static int countNeighbours(int[][] board, int x, int y) {
+	public static int count(int[][] board, int x, int y) {
 
 		if (board == null) {
 			throw new IllegalArgumentException();

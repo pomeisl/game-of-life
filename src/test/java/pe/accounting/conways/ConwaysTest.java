@@ -1,7 +1,7 @@
 package pe.accounting.conways;
 
 import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -12,9 +12,13 @@ import java.util.List;
 import org.junit.Test;
 import org.mockito.internal.util.reflection.Whitebox;
 
-import pe.accounting.conways.ui.TerminalRepresenter;
+import pe.accounting.conways.common.Consts;
+import pe.accounting.conways.game.GameOfLife;
+import pe.accounting.conways.game.GameOfLifeImpl;
+import pe.accounting.conways.ui.SwingRepresentation;
+import pe.accounting.conways.utils.LifeRules;
 
-public class GameOfLifeImplTest {
+public class ConwaysTest {
 
 	@Test
 	public void testUpdateTest_GivenBoard_SucesfullyUpdate() {
@@ -50,15 +54,14 @@ public class GameOfLifeImplTest {
 		assertArrayEquals(expected, game.getBoard());
 	}
 
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testAddListener_GivenObserver_PrivateListContainsThat() {
 		Observable game = new GameOfLifeImpl(new int[][] {});
-		Observer representer = mock(TerminalRepresenter.class);
+		Observer representer = mock(SwingRepresentation.class);
 		game.subscribe(representer);
 
-		@SuppressWarnings("unchecked")
-		final List<Observer> observers = (List<Observer>) Whitebox.getInternalState(game,
-				"observers");
+		final List<Observer> observers = (List<Observer>) Whitebox.getInternalState(game, "observers");
 
 		assertTrue(observers.contains(representer));
 	}
@@ -66,7 +69,7 @@ public class GameOfLifeImplTest {
 	@Test
 	public void testUpdate_GivenObserver_BeUpdates() {
 		Observable game = new GameOfLifeImpl(new int[][] {});
-		Observer representer = mock(TerminalRepresenter.class);
+		Observer representer = mock(SwingRepresentation.class);
 		game.subscribe(representer);
 
 		game.notifyObservsers();
@@ -75,11 +78,13 @@ public class GameOfLifeImplTest {
 	}
 
 	@Test
-	public void testGetGeneration_GivenGame_SucessfullyReturnGenerationNumber() {
-		GameOfLife game = new GameOfLifeImpl(new int[][] { {} });
-		game.update();
+	public void Consts_SuccessfullyInitialize() {
+		assertNotNull(new Consts());
+	}
 
-		assertEquals(2, game.getGeneration());
+	@Test
+	public void LifeRules_SuccessfullyInitialize() {
+		assertNotNull(new LifeRules());
 	}
 
 }

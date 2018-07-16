@@ -12,13 +12,11 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
-import pe.accounting.conways.utils.NeighboursCounter;
-
 @RunWith(Enclosed.class)
 public class NeighboursCounterTest {
 
 	@RunWith(Parameterized.class)
-	public static class ParametertizedTest {
+	public static class BoardCombinationsTest {
 		@Parameters
 		public static Collection<Object[]> data() {
 			return Arrays.asList(new Object[][] { //
@@ -40,27 +38,28 @@ public class NeighboursCounterTest {
 		public int[][] inputBoard;
 
 		@Parameter(1)
-		public int posX;
+		public int positionX;
 
 		@Parameter(2)
-		public int posY;
+		public int positionY;
 
 		@Parameter(3)
 		public int expextedLiveNeighbour;
 
 		@Test
 		public void test() {
-			int actualLiveNeighbour = NeighboursCounter.countNeighbours(inputBoard, posX, posY);
+			int actualLiveNeighbour = NeighboursCounter.count(inputBoard, positionX, positionY);
 			assertEquals(expextedLiveNeighbour, actualLiveNeighbour);
 		}
 
 	}
 
-	public static class NonParameterizedTest {
+	public static class ExceptionBranchesTest {
 
 		@Test(expected = IllegalArgumentException.class)
-		public void test() {
-			NeighboursCounter.countNeighbours(null, 1, 1);
+		public void testCountNeighbours_NullBoard_Throws() {
+			int[][] inputBoard = null;
+			NeighboursCounter.count(inputBoard, 0, 0);
 		}
 
 	}

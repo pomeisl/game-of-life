@@ -1,22 +1,22 @@
-package pe.accounting.conways;
+package pe.accounting.conways.game;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import lombok.Getter;
+import pe.accounting.conways.Observable;
+import pe.accounting.conways.Observer;
 import pe.accounting.conways.utils.LifeRules;
 import pe.accounting.conways.utils.NeighboursCounter;
 
 public class GameOfLifeImpl implements GameOfLife, Observable, Runnable {
 
 	private @Getter int[][] board;
-	private @Getter int generation;
 	private List<Observer> observers;
 
 	public GameOfLifeImpl(final int[][] board) {
 		this.board = board;
 		this.observers = new LinkedList<>();
-		generation++;
 	}
 
 	@Override
@@ -28,7 +28,7 @@ public class GameOfLifeImpl implements GameOfLife, Observable, Runnable {
 			for (int j = 0; j < next[0].length; j++) {
 
 				int currentState = board[i][j];
-				int liveNeighbours = NeighboursCounter.countNeighbours(board, i, j);
+				int liveNeighbours = NeighboursCounter.count(board, i, j);
 				int nextState = LifeRules.getNewState(currentState, liveNeighbours);
 				next[i][j] = nextState;
 
@@ -37,8 +37,6 @@ public class GameOfLifeImpl implements GameOfLife, Observable, Runnable {
 		}
 
 		board = next;
-		generation++;
-		
 		this.notifyObservsers();
 	}
 
@@ -49,9 +47,7 @@ public class GameOfLifeImpl implements GameOfLife, Observable, Runnable {
 
 	@Override
 	public void notifyObservsers() {
-		for (Observer observer : observers) {
-			observer.update(this);
-		}
+		observers.forEach(observer -> observer.update(this));
 	}
 
 	@Override

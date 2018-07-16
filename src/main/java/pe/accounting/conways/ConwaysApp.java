@@ -1,25 +1,20 @@
 package pe.accounting.conways;
 
-import static pe.accounting.conways.common.Consts.MAX_BOARD_HEIGHT;
-import static pe.accounting.conways.common.Consts.MAX_BOARD_WIDTH;
-import static pe.accounting.conways.common.Consts.MIN_BOARD_HEIGHT;
-import static pe.accounting.conways.common.Consts.MIN_BOARD_WIDTH;
-
-import pe.accounting.conways.ui.SwingRepresenter;
-import pe.accounting.conways.utils.RandomBoardUtil;
+import pe.accounting.conways.game.GameOfLife;
+import pe.accounting.conways.game.RandomGameOfLifeProxy;
+import pe.accounting.conways.ui.SwingRepresentation;
 
 public class ConwaysApp {
 
 	public static void main(String[] args) {
 
-		int[][] board = RandomBoardUtil.randomBoard(MIN_BOARD_WIDTH, MAX_BOARD_WIDTH,
-				MIN_BOARD_HEIGHT, MAX_BOARD_HEIGHT);
+		Observable observableGame = new RandomGameOfLifeProxy();
+		GameOfLife game = (GameOfLife) observableGame;
+		Observer window = new SwingRepresentation(game.getBoard().length, game.getBoard()[0].length);
+		observableGame.subscribe(window);
 
-		Observable observable = new GameOfLifeImpl(board);
-		observable.subscribe(new SwingRepresenter(board.length, board[0].length));
-
-		Runnable game = (Runnable) observable;
-		game.run();
+		Runnable runnableGame = (Runnable) observableGame;
+		runnableGame.run();
 
 	}
 

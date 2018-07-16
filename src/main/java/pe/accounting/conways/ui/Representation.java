@@ -6,7 +6,7 @@ package pe.accounting.conways.ui;
  * @author pomeisl
  *
  */
-public interface Representer {
+public interface Representation {
 
 	/**
 	 * Paint representation.
