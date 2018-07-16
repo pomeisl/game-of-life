@@ -6,12 +6,14 @@ public final class NeighboursCounter {
 
 	/**
 	 * Return numbers of living neighbours around a specified point.
+	 * 
 	 * @param board
 	 * @param x
 	 * @param y
 	 * @return
+	 * @throws IllegalArgumentException when the given board is null
 	 */
-	public static int count(int[][] board, int x, int y) {
+	public static int count(int[][] board, int x, int y) throws IllegalArgumentException {
 
 		if (board == null) {
 			throw new IllegalArgumentException();
