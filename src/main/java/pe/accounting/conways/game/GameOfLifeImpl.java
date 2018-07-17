@@ -52,9 +52,7 @@ public class GameOfLifeImpl implements GameOfLife, Observable, Runnable {
 
 	@Override
 	public void run() {
-		while (true) {
-			this.update();
-		}
+		this.update();
 	}
 
 }
