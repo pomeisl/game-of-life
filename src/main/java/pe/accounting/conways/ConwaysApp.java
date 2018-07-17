@@ -1,6 +1,5 @@
 package pe.accounting.conways;
 
-import java.util.Timer;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -15,11 +14,12 @@ public class ConwaysApp {
 
 		Observable observableGame = new RandomGameOfLifeProxy();
 		GameOfLife game = (GameOfLife) observableGame;
-		Observer window = new SwingRepresentation(game.getBoard().length, game.getBoard()[0].length);
+		Observer window = new SwingRepresentation(game.getBoard().length,
+				game.getBoard()[0].length);
 		observableGame.subscribe(window);
 
 		Runnable runnableGame = (Runnable) observableGame;
-		
+
 		ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 		scheduler.scheduleAtFixedRate(runnableGame, 0, 10L, TimeUnit.MILLISECONDS);
 
